@@ -11,7 +11,7 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "AFXMLRequestOperation.h"
-
+#import "Configuration.h"
 @implementation SharedWebService
 
 + (SharedWebService*)sharedInstance
@@ -41,7 +41,7 @@ AccessToken uuid:"ff0799e3-6a07-48af-bfa2-af7c549c2f57";country:"sg";language:"e
 
 - (void) getResponseDataBaseOnUrlAndParameters :(void (^)(id object, NSError *error))block url : (NSString*) url  parameters:(NSDictionary *)parameters httpMethod : (NSString*) httpMethod
 {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Configuration notificationBaseURL]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Configuration getBaseURL]]];
     
     if([httpMethod isEqualToString:@"POST"]){
         httpClient.parameterEncoding = AFJSONParameterEncoding;
@@ -100,7 +100,7 @@ AccessToken uuid:"ff0799e3-6a07-48af-bfa2-af7c549c2f57";country:"sg";language:"e
 
 
 - (void) getXmlResponseDataBaseOnUrlAndParameters :(void (^)(NSXMLParser *XMLParser, NSError *error))block url : (NSString*) url  parameters:(NSDictionary *)parameters httpMethod : (NSString*) httpMethod {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Configuration notificationBaseURL]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Configuration getBaseURL]]];
     httpClient.parameterEncoding = AFFormURLParameterEncoding;
     
     [httpClient registerHTTPOperationClass:[AFXMLRequestOperation class]];
@@ -134,8 +134,6 @@ AccessToken uuid:"ff0799e3-6a07-48af-bfa2-af7c549c2f57";country:"sg";language:"e
     
     [operation start];
 }
-
-
 
 - (void) registerForPushNotification : (void (^)(NSDictionary *dict, NSError *error))block deviceType : (NSString*) aDeviceType deviceToken : (NSString*) aDeviceToken {
     if (aDeviceType.length == 0 || aDeviceToken.length == 0)

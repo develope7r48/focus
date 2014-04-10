@@ -14,11 +14,23 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+
+#pragma mark - init method
+-(void) initLogin {
+    //CGRect loginFrame = CGRectMake(0, 0, _C_SCREENWIDTH, _C_SCREENHEIGHT);
+    NSLog(@"Init login here");
+    loginViewController = [[LoginViewController alloc] init];
+    //loginViewController.myController = self;
+    [self.window addSubview:loginViewController.view];
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+     [self initLogin];
     [self.window makeKeyAndVisible];
     return YES;
 }
